@@ -1,25 +1,47 @@
-"use client"; // ✅ Ensures this is a Client Component
+"use client";
 
-import Link from "next/link";
-import { Button } from "@/components/ui/button"; // Uses ShadCN buttons
-import Navbar from "@/components/Navbar";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/effect-fade";
+import { EffectFade, Autoplay } from "swiper/modules";
 
-export default function Home() {
+export default function HomePage() {
+  const images = [
+    "/images/slide-1.jpg",
+    "/images/slide-2.jpg",
+  ];
+
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen">
-      <h1 className="text-4xl font-bold mb-6 uppercase tracking-wide">
-        Welcome to Shine Opals Australia
-      </h1>
-      <p className="text-lg text-gray-600">
-        Your go-to place for beautiful opal jewelry!
-      </p>
+    <main className="w-full bg-white">
+      {/* Background Image Slider */}
+      <div className="relative w-full">
+        <Swiper
+          effect="fade"
+          modules={[EffectFade, Autoplay]}
+          autoplay={{ delay: 6000, disableOnInteraction: false }}
+          className="w-full"
+        >
+          {images.map((src, index) => (
+            <SwiperSlide key={index}>
+              <div className="w-full">
+                <img
+                  src={src}
+                  alt={`Slide ${index + 1}`}
+                  className="w-full h-auto max-h-[600px] object-cover"
+                />
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
 
-      {/* Link to Products Page */}
-      <Link href="/products">
-        <Button className="mt-6 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-lg">
-          View Products
-        </Button>
-      </Link>
+      {/* White Space for Text Content */}
+      <div className="w-full text-center py-12 px-6">
+        <h2 className="text-4xl font-semibold">About Shine Opals</h2>
+        <p className="text-lg text-gray-600 mt-4 max-w-3xl mx-auto">
+          Discover the beauty of Australian opals, hand-crafted into stunning jewelry pieces. Our collection showcases elegance and authenticity.
+        </p>
+      </div>
     </main>
   );
 }
